@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/edit.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.207.0.min.js"></script>
+    <title>Update Book</title>
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<section>
+    <div class="nav" th:insert="block/sidebar :: sidebar"></div>
+    <div class="show" th:each="book : ${books}">
+        <div class="show__title">[[#{app.editBook}]]</div>
+        <form action="/edit" method="post" enctype="multipart/form-data">
+            <div class="add__book">
+                <div class="preview">
+                    <div class="book-preview">
+                        <img class="book-preview__image" id="preImage" th:src="${book.bookImage}">
+                    </div>
+                    <div class="book-image">
+                        <input type="file" class="book-image__input" id = "bii" accept="image/*" name="bookImage">
+                        <label for="bii" class="book-image__label" id="book-image__label">[[#{app.editPhoto}]]</label>
+                    </div>
+                </div>
+                <div class="book-info">
+                    <div class="book-info__col">
+                        <div class="book-info__item">
+                            <input type="text" name="bookId" class="book-input" th:value="${book.id}" style="display: none">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.bookName}]]</div>
+                            <input type="text" name="bookName" class="book-input" th:value="${book.bookName}">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.bookAuthor}]]</div>
+                            <input type="text" name="bookAuthor" class="book-input" th:value="${book.author}">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.progLang}]]</div>
+                            <select class="book-input" name="bookLangProg">
+                                <option th:each="lang : ${allLanguage}" th:text="${lang.langName}" th:selected="${lang == book.language}"></option>
+                            </select>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.pubHouse}]]</div>
+                            <input type="text" name="bookPub" class="book-input" th:value="${book.publisher}">
+                        </div>
+                    </div>
+                    <div class="book-info__col">
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.langPub}]]</div>
+                            <input type="text" name="bookLang" class="book-input" th:value="${book.bookLang}">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.yearPub}]]</div>
+                            <input type="text" name="bookYear" class="book-input" th:value="${book.bookYear}">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.numPage}]]</div>
+                            <input type="text" name="bookPage" class="book-input" th:value="${book.bookPage}">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.uploadPDF}]]</div>
+                            <input type="file" class="book-input" id="bi" accept="application/pdf"
+                                   name="bookPDF" onchange="uploadSampleFile()">
+                        </div>
+                        <div class="book-info__item">
+                            <div class="progress-bar" id="progress-bar">
+                                <div class="progress-bar-fill">
+                                    <span class="progress-bar-text">0%</span>
+                                    <span class="progress-bar-check"><img th:src="@{/img/check.png}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="add-button" type="submit">[[#{app.edit}]]</button>
+            </div>
+        </form>
+    </div>
+    <div class="filter" th:insert="block/filter :: filter"></div>
+</section>
+<footer th:insert="block/footer :: footer"></footer>
+<script th:src="@{/js/update_preview.js/}"></script>
+<script th:src="@{/js/progress_bar.js}"></script>
+</body>
+</html>

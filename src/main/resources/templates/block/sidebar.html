@@ -1,0 +1,36 @@
+<div th:fragment="sidebar" xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="sidebar">
+        <ul class="left-menu">
+            <li class="left-menu__title">
+                [[#{app.list}]]
+            </li>
+            <li class="left-menu__item" th:each="lang : ${allLanguage}">
+                <a th:href="@{'/lang/' + ${lang.langName}}" th:text="${lang.langName}"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="lang-model" >
+        <div class="lang-model__col" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="long-model__title">
+                [[#{app.addLang}]]
+            </div>
+            <form action="/addLang" method="post" enctype="multipart/form-data">
+                <input type="text" name="langName" required>
+                <button type="submit">[[#{app.add}]]</button>
+            </form>
+        </div>
+        <div class="lang-model__col" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="long-model__title">
+                [[#{app.deleteLang}]]
+            </div>
+            <form action="/deleteLang" method="post" enctype="multipart/form-data">
+                <select name="langName">
+                    <option th:each="lang : ${allLanguage}" th:text="${lang.langName}" th:value="${lang.id}"></option>
+                </select>
+                <button type="submit">[[#{app.delete}]]</button>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/add.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.207.0.min.js"></script>
+    <title>Create New Book</title>
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<section>
+    <div class="nav" th:insert="block/sidebar :: sidebar"></div>
+    <div class="show">
+        <div class="show__title">[[#{app.addNewBook}]]</div>
+        <form action="/add" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="add__book">
+                <div class="preview">
+                    <div class="book-preview">
+                        <img class="book-preview__image" id="preImage">
+                        <div class="book-preview__text">[[#{app.prevImage}]]</div>
+                    </div>
+                    <div class="book-image">
+                        <input type="file" class="book-image__input" id="bii" accept="image/*" name="bookImage">
+                        <label for="bii" class="book-image__label" id="book-image__label">[[#{app.uploadPhoto}]]</label>
+                    </div>
+                </div>
+                <div class="book-info">
+                    <div class="book-info__col">
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.bookName}]]</div>
+                            <input type="text" class="book-input" name="bookName" required>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.bookAuthor}]]</div>
+                            <input type="text" class="book-input" name="bookAuthor" required>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.progLang}]]</div>
+                            <select class="book-input" name="bookLangProg" size="1" autocomplete="off">
+                                <option th:each="lang : ${allLanguage}" th:text="${lang.langName}"></option>
+                            </select>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.pubHouse}]]</div>
+                            <input type="text" class="book-input" name="bookPub" required>
+                        </div>
+                    </div>
+                    <div class="book-info__col">
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.langPub}]]</div>
+                            <input type="text" class="book-input" name="bookLang" required>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.yearPub}]]</div>
+                            <input type="text" class="book-input" name="bookYear" required>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.numPage}]]</div>
+                            <input type="text" class="book-input" name="bookPage" required>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="book-title">[[#{app.uploadPDF}]]</div>
+                            <input type="file" class="book-input" id="bi" accept="application/pdf"
+                                   name="bookPDF" onchange="uploadSampleFile()" required>
+                        </div>
+                        <div class="book-info__item">
+                            <div class="progress-bar" id="progress-bar">
+                                <div class="progress-bar-fill">
+                                    <span class="progress-bar-text">0%</span>
+                                    <span class="progress-bar-check" onclick="deleteFile()">
+                                        <img th:src="@{/img/remove.png}">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="add-button" type="submit" >[[#{app.add}]]</button>
+            </div>
+        </form>
+    </div>
+    <div class="filter" th:insert="block/filter :: filter"></div>
+</section>
+<footer th:insert="block/footer :: footer"></footer>
+<script th:src="@{/js/preview.js}"></script>
+<script th:src="@{/js/progress_bar.js}"></script>
+</body>
+</html>

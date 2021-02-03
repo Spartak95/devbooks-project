@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Forbidden Error</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<div class="error-page">
+    <div class="error-title">Error 403</div>
+    <div class="error-text">Sorry, You Don't Have Permission To View This Page.</div>
+</div>
+</body>
+</html>

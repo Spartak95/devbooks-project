@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<section>
+    <div class="nav" th:insert="block/sidebar :: sidebar"></div>
+    <div class="show">
+        <div class="show__title" th:text="${langName}"></div>
+        <div class="add-book">
+            <a th:href="@{/add}" class="add-book__button" sec:authorize="hasRole('ROLE_ADMIN')">[[#{app.addBook}]]</a>
+        </div>
+        <div class="options-container">
+            <div class="option">
+                <a th:href="@{/new}">[[#{app.new}]]</a>
+            </div>
+            <div class="option">
+                <a th:href="@{/popular}">[[#{app.popular}]]</a>
+            </div>
+        </div>
+        <form th:action="@{/process_register}" method="post" th:object="${user}">
+            <div class="register">
+                <div class="register__title">
+                    [[#{app.accountCreate}]]
+                </div>
+                <div class="register-item">
+                    <div class="register-item__title">[[#{app.name}]]</div>
+                    <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                    <input type="text" th:field="*{username}">
+                </div>
+                <div class="register-item">
+                    <div class="register-item__title">[[#{app.email}]]</div>
+                    <div class="error" th:if="${emailError}">[[#{app.alreadyRegistered}]]</div>
+                    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    <input type="text" name="email" th:field="*{email}">
+                </div>
+                <div class="register-item">
+                    <div class="register-item__title">[[#{app.pass}]]</div>
+                    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    <input type="password" name="password" class="password" th:field="*{password}">
+                    <div class="show-pass" onclick="showPass()"><img th:src="@{img/eye.png}"></div>
+                </div>
+                <div class="register-item">
+                    <div class="register-item__title">[[#{app.confirmPass}]]</div>
+                    <div class="error" th:if="${confirmError}">[[#{app.differentPass}]]</div>
+                    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    <input type="password" name="confirmPassword" class="confirmPassword">
+                    <div class="show-pass" onclick="showConfirmPass()"><img th:src="@{img/eye.png}"></div>
+                </div>
+                <button type="submit" class="reg-button">[[#{app.register}]]</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="filter" th:insert="block/filter :: filter"></div>
+</section>
+<footer th:insert="block/footer :: footer"></footer>
+<script th:src="@{/js/show_password.js}"></script>
+</body>
+</html>

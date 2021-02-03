@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>DEVBOOKS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<section>
+    <div class="nav" th:insert="block/sidebar :: sidebar"></div>
+    <div class="show">
+        <div class="show__title" th:text="${langName}"></div>
+        <div class="add-book">
+            <a th:href="@{/add}" class="add-book__button" sec:authorize="hasRole('ROLE_ADMIN')">[[#{app.addBook}]]</a>
+        </div>
+        <div class="options-container">
+            <div class="option">
+                <a th:href="@{/new}">[[#{app.new}]]</a>
+            </div>
+            <div class="option">
+                <a th:href="@{/popular}">[[#{app.popular}]]</a>
+            </div>
+        </div>
+        <div class="book">
+            <div class="book__item" th:each="book : ${books}">
+                <a th:href="@{'/info/' + ${book.id}}">
+                    <img class="book__image" th:src="${book.bookImage}">
+                    <div class="book__author" th:text="${book.author}"></div>
+                    <div class="book__name" th:text="${book.bookName}"></div>
+                </a>
+                <div class="book__button">
+                    <a th:href="@{'/edit/' + ${book.id}}" class="book__update" sec:authorize="hasRole('ROLE_ADMIN')">[[#{app.edit}]]</a>
+                    <a th:href="@{'/delete/' + ${book.id}}" class="book__delete" sec:authorize="hasRole('ROLE_ADMIN')">[[#{app.delete}]]</a>
+                </div>
+            </div>
+        </div>
+        <div class="paging" th:if="${totalItems &gt; 8}">
+            <div class="paging__previous" th:if="${books.hasPrevious()}">
+                <a th:href="@{'/lang/' + ${langByName.langName} + '/page/' + ${i - 1}}">&#171; Prev</a>
+            </div>
+            <div class="paging__number" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{'/lang/' + ${langByName.langName} + '/page/' + ${i}}">[[${i}]]</a>
+            </div>
+            <div class="paging__next" th:if="${books.hasNext()}">
+                <a th:href="@{'/lang/' + ${langByName.langName} + '/page/' + ${i + 1}}">Next &#187;</a>
+            </div>
+        </div>
+    </div>
+    <div class="filter" th:insert="block/filter :: filter"></div>
+</section>
+<footer th:insert="block/footer :: footer"></footer>
+</body>
+</html>

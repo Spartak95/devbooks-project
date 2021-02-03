@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/info.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <title>Show Book</title>
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<section>
+    <div class="nav" th:insert="block/sidebar :: sidebar"></div>
+    <div class="show" th:each="book : ${books}">
+        <div class="show__title" th:text="${book.author} + ' | ' + ${book.bookName}"></div>
+        <div class="add__book">
+            <div class="preview">
+                <div class="book-preview">
+                    <img class="book-preview__image" th:src="${book.bookImage}">
+                </div>
+                <div class="book__button">
+                    <a target="_blank" class="book__delete" th:href="@{${book.bookContent}}">[[#{app.view}]]</a>
+                </div>
+            </div>
+            <div class="book-info">
+                <div class="book-info__col">
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.bookName}]]</div>
+                        <div class="book-subtitle" th:text="${book.bookName}"></div>
+                    </div>
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.bookAuthor}]]</div>
+                        <div class="book-subtitle" th:text="${book.author}"></div>
+                    </div>
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.progLang}]]</div>
+                        <div class="book-subtitle" th:text="${book.language}"></div>
+                    </div>
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.pubHouse}]]</div>
+                        <div class="book-subtitle" th:text="${book.publisher}"></div>
+                    </div>
+                </div>
+                <div class="book-info__col">
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.langPub}]]</div>
+                        <div class="book-subtitle" th:text="${book.bookLang}"></div>
+                    </div>
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.yearPub}]]</div>
+                        <div class="book-subtitle" th:text="${book.bookYear}"></div>
+                    </div>
+                    <div class="book-info__item">
+                        <div class="book-title">[[#{app.numPage}]]</div>
+                        <div class="book-subtitle" th:text="${book.bookPage}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="filter" th:insert="block/filter :: filter"></div>
+</section>
+<footer th:insert="block/footer :: footer"></footer>
+<script th:src="@{/js/preview.js}"></script>
+</body>
+</html>

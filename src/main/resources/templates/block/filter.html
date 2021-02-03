@@ -1,0 +1,26 @@
+<div class="filter-border" th:fragment="filter" xmlns:th="http://www.thymeleaf.org">
+    <p>[[#{app.filter}]]</p>
+    <form th:action="@{/filter}" method="get">
+        <div class="filter-author">
+            <div class="filter__title">
+                [[#{app.filterAuthor}]]
+            </div>
+            <div class="scroll">
+                <div class="filter-item" th:each="author : ${allAuthor}">
+                    <input type="radio" name="author" th:id="${author}" th:value="${author.fio}"/>
+                    <label th:for="${author}" th:text="${author.fio}"></label>
+                </div>
+            </div>
+        </div>
+        <div class="filter-lang">
+            <div class="filter__title">
+                [[#{app.filterPubLang}]]
+            </div>
+            <div class="filter-item" th:each="lang : ${allBookLang}">
+                <input type="radio" name="lang" th:id="${lang}" th:value="${lang}"/>
+                <label th:for="${lang}" th:text="${lang}"></label>
+            </div>
+        </div>
+        <button type="submit" class="filter-button">[[#{app.filterButton}]]</button>
+    </form>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+</head>
+<body>
+<header th:insert="block/header :: header"></header>
+<section>
+    <div class="nav" th:insert="block/sidebar :: sidebar"></div>
+    <div class="show">
+        <div class="show__title" th:text="${langName}"></div>
+        <div class="add-book">
+            <a th:href="@{/add}" class="add-book__button" sec:authorize="hasRole('ROLE_ADMIN')">[[#{app.addBook}]]</a>
+        </div>
+        <div class="options-container">
+            <div class="option">
+                <a th:href="@{/new}">[[#{app.new}]]</a>
+            </div>
+            <div class="option">
+                <a th:href="@{/popular}">[[#{app.popular}]]</a>
+            </div>
+        </div>
+        <form th:action="@{/login}" method="post" th:object="${user}">
+            <div class="register">
+                <div class="register__title">
+                    [[#{app.accountLogin}]]
+                </div>
+                <div class="register-item">
+                    <div class="error" th:if="${param.error}">[[#{app.incorrectEmailOrPass}]]</div>
+                    <div class="register-item__title">[[#{app.email}]]</div>
+                    <input type="text" name="email">
+                </div>
+                <div class="register-item">
+                    <div class="forgot-pass">
+                        <div class="register-item__title">[[#{app.pass}]]</div>
+                        <div class="register-item__forgot"><a th:href="@{/forgot_password}">[[#{app.forgot}]]</a></div>
+                    </div>
+                    <input type="password" name="password" class="password">
+                    <div class="show-pass" onclick="showPass()"><img th:src="@{img/eye.png}"></div>
+                </div>
+                <span class="rem-me">
+                     <input type="checkbox" id="rem" name="remember-me">
+                     <label for="rem">[[#{app.remMe}]]</label>
+                 </span>
+                <button type="submit" class="login-button">[[#{app.login}]]</button>
+            </div>
+            <div class="login-reg">
+                [[#{app.youHaveNotReg}]] <a th:href="@{/register}">[[#{app.pleaseReg}]] </a>[[#{app.regNow}]]
+            </div>
+        </form>
+    </div>
+    <div class="filter" th:insert="block/filter :: filter"></div>
+</section>
+<footer th:insert="block/footer :: footer"></footer>
+<script th:src="@{/js/show_password.js}"></script>
+</body>
+</html>

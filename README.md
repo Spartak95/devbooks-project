@@ -1,4 +1,4 @@
-# devbooksproject
+# Devbooks Project
 
 **Project name**
 

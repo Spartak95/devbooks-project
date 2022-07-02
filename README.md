@@ -11,7 +11,7 @@
     
 **Technologies used**
 
-    Java SE8(Core, OOP, Collection, IO), Spring Boot, MySQL, HTML,
+    Java SE8, Spring Boot, MySQL, HTML,
     CSS, JavaScript, Thymeleaf, AWS(S3, RDS, Elastic Beanstalk),
     Maven
     
